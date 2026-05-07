@@ -6,12 +6,12 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('sentinel_auth') === 'true';
   });
-  
+
   const [recentScans, setRecentScans] = useState(() => {
     const saved = localStorage.getItem('sentinel_scans_backup');
     return saved ? JSON.parse(saved) : [];
   });
-  
+
   const [subscriptionPlan, setSubscriptionPlan] = useState(() => {
     return localStorage.getItem('sentinel_plan') || 'Free';
   });
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchScans = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/scans');
+        const res = await fetch('https://deepfake-detector-yd4q.onrender.com/api/scans');
         if (res.ok) {
           const data = await res.json();
           setRecentScans(data);
@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }) => {
 
     // 2. Persist to backend
     try {
-      await fetch('http://localhost:5000/api/scans', {
+      await fetch('https://deepfake-detector-yd4q.onrender.com/api/scans', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newScan)
@@ -106,12 +106,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ 
-      isAuthenticated, 
-      login, 
-      logout, 
-      recentScans, 
-      addScan, 
+    <AuthContext.Provider value={{
+      isAuthenticated,
+      login,
+      logout,
+      recentScans,
+      addScan,
       isLoading,
       subscriptionPlan,
       scanCredits,

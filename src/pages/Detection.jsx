@@ -19,7 +19,7 @@ export default function Detection() {
   useEffect(() => {
     // Check if we have credits on load
     if (scanCredits <= 0 && subscriptionPlan !== 'Enterprise') {
-       // Optional: show a toast or message
+      // Optional: show a toast or message
     }
   }, [scanCredits, subscriptionPlan]);
 
@@ -49,7 +49,7 @@ export default function Detection() {
 
   const startAnalysis = async () => {
     if (!selectedFile) return;
-    
+
     if (scanCredits <= 0 && subscriptionPlan !== 'Enterprise') {
       alert(`Scan limit reached for your ${subscriptionPlan} plan. Please upgrade to continue forensic analysis.`);
       navigate('/pricing');
@@ -57,11 +57,11 @@ export default function Detection() {
     }
 
     setIsAnalyzing(true);
-    
+
     try {
       let res;
       if (selectedFile.isUrl) {
-        res = await fetch('http://localhost:5000/api/analyze/url', {
+        res = await fetch('https://deepfake-detector-yd4q.onrender.com/api/analyze/url', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url: selectedFile.name })
@@ -75,12 +75,12 @@ export default function Detection() {
           const blob = new Blob(['mock'], { type: selectedFile.type });
           formData.append('file', blob, selectedFile.name);
         }
-        res = await fetch('http://localhost:5000/api/analyze/media', {
+        res = await fetch('https://deepfake-detector-yd4q.onrender.com/api/analyze/media', {
           method: 'POST',
           body: formData
         });
       }
-      
+
       const data = await res.json();
       // Add offline flag for local files
       data.offline = !selectedFile.isUrl;
@@ -154,12 +154,12 @@ export default function Detection() {
               </div>
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-3 top-3 text-on-surface-variant/50">link</span>
-                <input 
-                  type="url" 
-                  placeholder="Paste URL link here for analysis..." 
+                <input
+                  type="url"
+                  placeholder="Paste URL link here for analysis..."
                   className="w-full bg-surface-container border border-outline-variant/30 rounded-xl pl-10 pr-4 py-3 focus:border-primary focus:outline-none"
                   onChange={(e) => {
-                    if(e.target.value) {
+                    if (e.target.value) {
                       setSelectedFile({ name: e.target.value, type: 'url', isUrl: true });
                     } else {
                       setSelectedFile(null);
@@ -173,21 +173,21 @@ export default function Detection() {
             <div className="flex flex-col gap-3 mt-2">
               <p className="text-xs font-bold text-outline-variant uppercase tracking-widest">Quick Test Samples</p>
               <div className="flex gap-2">
-                <button 
+                <button
                   onClick={() => setSelectedFile({ name: 'sample_deepfake.mp4', type: 'video/mp4', size: 12500000 })}
                   className="flex-1 py-2 px-3 bg-surface-container hover:bg-primary/20 hover:text-primary transition-colors rounded-lg border border-outline-variant/10 text-xs font-medium flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[16px]">smart_display</span>
                   Video
                 </button>
-                <button 
+                <button
                   onClick={() => setSelectedFile({ name: 'forged_contract.pdf', type: 'application/pdf', size: 450000 })}
                   className="flex-1 py-2 px-3 bg-surface-container hover:bg-primary/20 hover:text-primary transition-colors rounded-lg border border-outline-variant/10 text-xs font-medium flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[16px]">description</span>
                   Document
                 </button>
-                <button 
+                <button
                   onClick={() => setSelectedFile({ name: 'profile_pic.jpg', type: 'image/jpeg', size: 3400000 })}
                   className="flex-1 py-2 px-3 bg-surface-container hover:bg-primary/20 hover:text-primary transition-colors rounded-lg border border-outline-variant/10 text-xs font-medium flex items-center justify-center gap-2 cursor-pointer"
                 >
@@ -212,7 +212,7 @@ export default function Detection() {
             <h3 className="font-headline text-xl font-semibold">Live Preview</h3>
             <div className="flex gap-4 items-center">
               {/* X-Ray Toggle */}
-              <button 
+              <button
                 onClick={() => setIsXrayEnabled(!isXrayEnabled)}
                 className={`flex items-center gap-2 px-2 py-1 rounded-md transition-all ${isXrayEnabled ? 'bg-primary/20 text-primary' : 'text-outline-variant hover:bg-white/5'}`}
               >
@@ -230,54 +230,54 @@ export default function Detection() {
           <div className="glass-card rounded-xl flex-grow flex items-center justify-center relative overflow-hidden group min-h-[500px]">
             {/* Visual Background Element */}
             <div className="absolute inset-0 opacity-10 grayscale">
-              <img 
-                className="w-full h-full object-cover" 
-                alt="high-tech digital circuit pattern" 
+              <img
+                className="w-full h-full object-cover"
+                alt="high-tech digital circuit pattern"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrmaytrdXiRL8wK7VO_Hh8yHM1qmsPc3CzKWxeQnsgqag-rwj-8zTFQRsyq2ok0nr9qEdMsDd1OCOgera6aDHVv873ZtFjMDuHJnuIAP8-fQYwhVw9I1gaFLzY9lVJ2TwL2engIEW3pbda8LkPTOrQoU22exFPt3hcKYZxMekk7mX7hOWU_fuZgZiztP1DPTLmLPVxHF8sKSjUu2UBHnePjZ_0rGysFrsTDfhiHzB_1NOHVm9OHdCawKlggHwmaoJUMRfoYOZl8QM"
               />
             </div>
 
             {selectedFile ? (
-             <div className={`absolute inset-0 flex flex-col items-center justify-center z-10 bg-surface-container-highest/20 backdrop-blur-sm overflow-hidden p-2 ${isXrayEnabled ? 'x-ray-mode' : ''}`}>
-               {/* Biometric HUD Overlay */}
-               {selectedFile.type?.startsWith('image') || selectedFile.type?.startsWith('video') ? <BiometricHUD /> : null}
-               
-               {/* Advanced Scanning HUD Overlay */}
-                 <div className="absolute inset-0 z-30 opacity-40 pointer-events-none">
-                    <ForensicTopology isFake={false} type={selectedFile.type} />
-                 </div>
+              <div className={`absolute inset-0 flex flex-col items-center justify-center z-10 bg-surface-container-highest/20 backdrop-blur-sm overflow-hidden p-2 ${isXrayEnabled ? 'x-ray-mode' : ''}`}>
+                {/* Biometric HUD Overlay */}
+                {selectedFile.type?.startsWith('image') || selectedFile.type?.startsWith('video') ? <BiometricHUD /> : null}
 
-                 {previewUrl && selectedFile.isUrl ? (
-                   <iframe src={previewUrl} className="w-full h-full shadow-2xl rounded-lg bg-white border-0" title="URL Preview" sandbox="allow-scripts allow-same-origin" />
-                 ) : previewUrl && selectedFile.type?.startsWith('video') ? (
-                   <video src={previewUrl} controls className="w-full h-full object-contain shadow-2xl rounded-lg" />
-                 ) : previewUrl && selectedFile.type?.startsWith('image') ? (
-                   <img src={previewUrl} className="w-full h-full object-contain shadow-2xl rounded-lg" />
-                 ) : previewUrl && selectedFile.type?.includes('pdf') ? (
-                   <embed src={previewUrl} type="application/pdf" className="w-full h-full shadow-2xl rounded-lg" />
-                 ) : (
-                   <div className="flex flex-col items-center justify-center p-12 bg-surface-container-high/90 rounded-2xl backdrop-blur-md shadow-2xl border border-outline-variant/20">
-                     <span className="material-symbols-outlined text-primary text-6xl mb-6 opacity-80" style={{ fontVariationSettings: "'FILL' 0" }}>file_present</span>
-                     <h4 className="font-headline text-2xl font-bold text-on-surface mb-2">{selectedFile.name}</h4>
-                     <p className="text-on-surface-variant max-w-sm text-sm text-center">
-                       Live preview unavailable for this format. Subject media loaded into active memory buffer.
-                     </p>
-                   </div>
-                 )}
-               </div>
-            ) : (
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 p-12 bg-surface-container-high/40 backdrop-blur-sm">
-                  <div className="w-24 h-24 mb-6 relative">
-                    <div className="absolute inset-0 border-2 border-primary/20 rounded-full animate-ping"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="material-symbols-outlined text-primary text-4xl">visibility</span>
-                    </div>
-                  </div>
-                  <h4 className="font-headline text-2xl font-bold text-on-surface mb-2">Awaiting Input</h4>
-                  <p className="text-on-surface-variant max-w-sm text-sm">
-                    Once a file is selected, the forensic previewer will initialize the spatial analysis layer here.
-                  </p>
+                {/* Advanced Scanning HUD Overlay */}
+                <div className="absolute inset-0 z-30 opacity-40 pointer-events-none">
+                  <ForensicTopology isFake={false} type={selectedFile.type} />
                 </div>
+
+                {previewUrl && selectedFile.isUrl ? (
+                  <iframe src={previewUrl} className="w-full h-full shadow-2xl rounded-lg bg-white border-0" title="URL Preview" sandbox="allow-scripts allow-same-origin" />
+                ) : previewUrl && selectedFile.type?.startsWith('video') ? (
+                  <video src={previewUrl} controls className="w-full h-full object-contain shadow-2xl rounded-lg" />
+                ) : previewUrl && selectedFile.type?.startsWith('image') ? (
+                  <img src={previewUrl} className="w-full h-full object-contain shadow-2xl rounded-lg" />
+                ) : previewUrl && selectedFile.type?.includes('pdf') ? (
+                  <embed src={previewUrl} type="application/pdf" className="w-full h-full shadow-2xl rounded-lg" />
+                ) : (
+                  <div className="flex flex-col items-center justify-center p-12 bg-surface-container-high/90 rounded-2xl backdrop-blur-md shadow-2xl border border-outline-variant/20">
+                    <span className="material-symbols-outlined text-primary text-6xl mb-6 opacity-80" style={{ fontVariationSettings: "'FILL' 0" }}>file_present</span>
+                    <h4 className="font-headline text-2xl font-bold text-on-surface mb-2">{selectedFile.name}</h4>
+                    <p className="text-on-surface-variant max-w-sm text-sm text-center">
+                      Live preview unavailable for this format. Subject media loaded into active memory buffer.
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 p-12 bg-surface-container-high/40 backdrop-blur-sm">
+                <div className="w-24 h-24 mb-6 relative">
+                  <div className="absolute inset-0 border-2 border-primary/20 rounded-full animate-ping"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-primary text-4xl">visibility</span>
+                  </div>
+                </div>
+                <h4 className="font-headline text-2xl font-bold text-on-surface mb-2">Awaiting Input</h4>
+                <p className="text-on-surface-variant max-w-sm text-sm">
+                  Once a file is selected, the forensic previewer will initialize the spatial analysis layer here.
+                </p>
+              </div>
             )}
 
             {/* HUD Elements */}
@@ -295,12 +295,11 @@ export default function Detection() {
 
       {/* Footer Action */}
       <div className="flex justify-end pt-8 relative z-10">
-        <button 
+        <button
           onClick={startAnalysis}
           disabled={!selectedFile || isAnalyzing}
-          className={`px-12 py-5 rounded-xl text-on-primary font-headline font-bold text-lg flex items-center gap-3 transition-all ${
-            selectedFile && !isAnalyzing ? 'glass-gradient hover:brightness-110 active:scale-95 shadow-xl shadow-primary-container/20 cursor-pointer pointer-events-auto border-0' : 'bg-surface-container-high text-on-surface-variant opacity-50 cursor-not-allowed border-0'
-          }`}
+          className={`px-12 py-5 rounded-xl text-on-primary font-headline font-bold text-lg flex items-center gap-3 transition-all ${selectedFile && !isAnalyzing ? 'glass-gradient hover:brightness-110 active:scale-95 shadow-xl shadow-primary-container/20 cursor-pointer pointer-events-auto border-0' : 'bg-surface-container-high text-on-surface-variant opacity-50 cursor-not-allowed border-0'
+            }`}
         >
           <span>Analyze Now</span>
           <span className="material-symbols-outlined">analytics</span>
