@@ -42,7 +42,7 @@ const checkDeepfake = (identifier, mediaType) => {
   const fakeTriggers = ['fake', 'deepfake', 'forged', 'synthetic', 'manipulated', 'altered', 'leak'];
   const isFake = fakeTriggers.some(trigger => lowerId.includes(trigger));
   const score = parseFloat((88 + Math.random() * 11).toFixed(1));
-  
+
   let anomalies = [];
   if (isFake) {
     if (mediaType === 'Video' || mediaType === 'Audio') {
@@ -105,7 +105,7 @@ app.post('/api/create-checkout-session', async (req, res) => {
   try {
     const lowerCurrency = currency.toLowerCase();
     const paymentMethods = ['card', 'paypal', 'link'];
-    
+
     if (lowerCurrency === 'inr') {
       paymentMethods.push('upi', 'netbanking');
     } else if (lowerCurrency === 'eur') {
@@ -178,7 +178,7 @@ app.post('/api/scans', (req, res) => {
 });
 
 // Catch-all to serve index.html for React Router
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   const indexFile = path.join(distPath, 'index.html');
   if (fs.existsSync(indexFile)) {
     res.sendFile(indexFile);
