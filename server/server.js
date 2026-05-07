@@ -107,11 +107,10 @@ app.post('/api/create-checkout-session', async (req, res) => {
     const paymentMethods = ['card', 'paypal', 'link'];
 
     if (lowerCurrency === 'inr') {
-      paymentMethods.push('upi', 'netbanking');
+      paymentMethods.push('upi');
     } else if (lowerCurrency === 'eur') {
-      paymentMethods.push('ideal', 'sepa_debit', 'bancontact', 'sofort', 'giropay');
+      paymentMethods.push('ideal', 'sepa_debit', 'bancontact');
     } else {
-      // Global methods for other currencies
       paymentMethods.push('alipay');
     }
 
