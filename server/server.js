@@ -96,7 +96,7 @@ app.post('/api/analyze/url', (req, res) => {
 
 // --- Static File Serving (Production) ---
 const distPath = path.join(__dirname, '../dist');
-const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
+const CLIENT_URL = process.env.CLIENT_URL || 'https://deep-detect.netlify.app/';
 
 app.use(express.static(distPath));
 
