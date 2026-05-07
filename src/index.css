@@ -1,0 +1,415 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface-container-lowest: #05060b;
+  --color-surface-container-high: #262a35;
+  --color-background: #080a13;
+  --color-outline: #918fa1;
+  --color-on-primary-container: #dad7ff;
+  --color-inverse-surface: #dfe2f1;
+  --color-surface-dim: #080a13;
+  --color-on-error: #690005;
+  --color-outline-variant: #464555;
+  --color-on-primary: #ffffff;
+  --color-on-tertiary-fixed-variant: #7b2f00;
+  --color-surface-bright: #353944;
+  --color-on-secondary: #2a276a;
+  --color-surface-container: #10121d;
+  --color-primary: #c3c0ff;
+  --color-on-background: #dfe2f1;
+  --color-inverse-on-surface: #2c303b;
+  --color-secondary-container: #413f82;
+  --color-on-secondary-fixed: #140f54;
+  --color-on-surface: #dfe2f1;
+  --color-surface-tint: #c3c0ff;
+  --color-error-container: #93000a;
+  --color-secondary: #c3c0ff;
+  --color-on-primary-fixed: #0f0069;
+  --color-on-primary-fixed-variant: #3323cc;
+  --color-tertiary-container: #a44100;
+  --color-on-tertiary-fixed: #351000;
+  --color-on-secondary-fixed-variant: #413f82;
+  --color-secondary-fixed-dim: #c3c0ff;
+  --color-tertiary-fixed-dim: #ffb695;
+  --color-on-tertiary-container: #ffd2be;
+  --color-on-error-container: #ffdad6;
+  --color-inverse-primary: #4d44e3;
+  --color-surface-container-highest: #282a36;
+  --color-primary-fixed-dim: #c3c0ff;
+  --color-secondary-fixed: #e2dfff;
+  --color-on-tertiary: #571f00;
+  --color-primary-fixed: #e2dfff;
+  --color-surface: #0f131d;
+  --color-on-surface-variant: #c7c4d8;
+  --color-tertiary-fixed: #ffdbcc;
+  --color-surface-variant: #202230;
+  --color-on-secondary-container: #b0aef9;
+  --color-primary-container: #4f46e5;
+  --color-error: #ffb4ab;
+  --color-surface-container-low: #0a0e18;
+  --color-tertiary: #ffb695;
+
+  --font-headline: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "Inter", sans-serif;
+  
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --radius-full: 9999px;
+  --radius: 0.5rem;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .font-headline {
+  font-family: var(--font-headline);
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, var(--color-primary-container), #2c24b6);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary-fixed));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ghost-border {
+  border: 1px dashed rgba(195, 192, 255, 0.4);
+}
+
+.ghost-border-solid {
+  border: 1px solid rgba(195, 192, 255, 0.15);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.glass-gradient {
+  background: linear-gradient(135deg, rgba(195, 192, 255, 0.9) 0%, rgba(79, 70, 229, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-card-pro {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.rotate-3d {
+  transform: rotateY(10deg) rotateX(5deg);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.rotate-3d:hover {
+  transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+}
+
+.active-3d:active {
+  transform: scale(0.96) translateZ(-20px);
+  transition: transform 0.1s;
+}
+
+.glow-primary {
+  box-shadow: 0 0 30px rgba(195, 192, 255, 0.2);
+}
+
+.glow-error {
+  box-shadow: 0 0 30px rgba(255, 180, 171, 0.2);
+}
+
+/* 3D Floating Animation */
+@keyframes float-3d {
+  0% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+  33% { transform: translateY(-10px) rotateX(2deg) rotateY(2deg); }
+  66% { transform: translateY(-5px) rotateX(-2deg) rotateY(-1deg); }
+  100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+}
+
+.animate-float-3d {
+  animation: float-3d 6s ease-in-out infinite;
+}
+
+/* 3D Entrance Animation */
+@keyframes enter-3d {
+  from {
+    opacity: 0;
+    transform: translateZ(-200px) rotateX(20deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0) rotateX(0deg);
+  }
+}
+
+.animate-enter-3d {
+  animation: enter-3d 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.animate-enter-3d-delayed {
+  opacity: 0;
+  animation: enter-3d 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards;
+}
+
+.animate-enter-3d-more-delayed {
+  opacity: 0;
+  animation: enter-3d 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
+}
+
+/* Advanced Forensic Animations */
+@keyframes scan-line {
+  0% { transform: translateY(-100%); opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.forensic-scan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background: linear-gradient(to bottom, transparent, rgba(195, 192, 255, 0.3), rgba(195, 192, 255, 0.6), rgba(195, 192, 255, 0.3), transparent);
+  animation: scan-line 3s linear infinite;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.topological-grid {
+  background-image: radial-gradient(rgba(195, 192, 255, 0.15) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+@keyframes pulse-mesh {
+  0% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(1.05); }
+  100% { opacity: 0.1; transform: scale(1); }
+}
+
+.animate-pulse-mesh {
+  animation: pulse-mesh 4s ease-in-out infinite;
+}
+
+.forensic-mesh {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(195, 192, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(195, 192, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  mask-image: radial-gradient(circle, black, transparent 80%);
+}
+
+.data-stream {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  line-height: 1;
+  color: rgba(195, 192, 255, 0.4);
+  overflow: hidden;
+}
+
+/* Neural Net Background */
+.neural-bg {
+  background-image: 
+    radial-gradient(circle at 2px 2px, rgba(195, 192, 255, 0.1) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+@keyframes neural-pulse {
+  0% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.1; }
+}
+
+.animate-neural {
+  animation: neural-pulse 3s ease-in-out infinite;
+}
+
+/* Glitch Effect */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(-2px, -1px); }
+  60% { transform: translate(2px, 1px); }
+  80% { transform: translate(2px, -1px); }
+  100% { transform: translate(0); }
+}
+
+.glitch-hover:hover {
+  animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
+  color: var(--color-error);
+}
+
+/* Terminal Log Animation */
+@keyframes log-scroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+
+.log-stream {
+  animation: log-scroll 20s linear infinite;
+}
+
+.glow-text-primary {
+  text-shadow: 0 0 10px rgba(195, 192, 255, 0.5);
+}
+
+.glow-text-error {
+  text-shadow: 0 0 10px rgba(255, 180, 171, 0.5);
+}
+
+/* Biometric Face Scan Overlay */
+.face-scan-overlay {
+  position: absolute;
+  border: 2px solid var(--color-primary);
+  border-radius: 40% 40% 50% 50%;
+  box-shadow: 0 0 20px var(--color-primary), inset 0 0 20px var(--color-primary);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.biometric-point {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--color-primary);
+}
+
+@keyframes radar-pulse {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.radar-circle {
+  position: absolute;
+  border: 1px solid var(--color-primary);
+  border-radius: 50%;
+  animation: radar-pulse 3s linear infinite;
+}
+
+/* X-Ray Effect */
+.x-ray-mode {
+  filter: invert(1) hue-rotate(180deg) brightness(1.2) contrast(1.5);
+}
+
+/* Global Map Visuals */
+.map-node {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--color-primary);
+}
+
+@keyframes signal-ping {
+  0% { box-shadow: 0 0 0 0 rgba(195, 192, 255, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(195, 192, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(195, 192, 255, 0); }
+}
+
+.animate-ping-node {
+  animation: signal-ping 2s infinite;
+}
+
+/* Animations for Grand UI */
+@keyframes orb-float {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.animate-orb {
+  animation: orb-float 20s ease-in-out infinite alternate;
+}
+
+.animate-orb-delayed {
+  animation: orb-float 25s ease-in-out infinite alternate-reverse;
+}
+
+/* Print CSS */
+@media print {
+  @page {
+    margin: 0;
+    size: auto;
+  }
+  
+  html, body {
+    background-color: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Force visibility chain for the report */
+  #root, #root > div, main, .print-report-container {
+    display: block !important;
+    background-color: white !important;
+  }
+
+  /* Only show the print-specific template, hide other UI */
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .print-report-container {
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .print-report-container > div {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100vh !important;
+    border-width: 0.5cm !important;
+    padding: 1cm !important;
+  }
+
+  /* Hide the huge atmospheric backgrounds on print */
+  .animate-orb, .animate-orb-delayed, .pointer-events-none {
+    display: none !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
