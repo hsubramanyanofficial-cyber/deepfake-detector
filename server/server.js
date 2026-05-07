@@ -178,8 +178,9 @@ app.post('/api/scans', (req, res) => {
 });
 
 // Catch-all to serve index.html for React Router
-app.get('/*', (req, res) => {
+app.use((req, res) => {
   const indexFile = path.join(distPath, 'index.html');
+
   if (fs.existsSync(indexFile)) {
     res.sendFile(indexFile);
   } else {
