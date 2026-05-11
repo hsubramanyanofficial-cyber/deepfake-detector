@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react';
 
-export default function ForensicMap() {
-  const [nodes, setNodes] = useState([]);
+const WORLD_NODES = [
+  { x: 25, y: 35, label: 'NA-NODE-01', risk: 'LOW' },
+  { x: 45, y: 40, label: 'EU-NODE-04', risk: 'HIGH' },
+  { x: 75, y: 55, label: 'AS-NODE-09', risk: 'MEDIUM' },
+  { x: 35, y: 75, label: 'SA-NODE-02', risk: 'LOW' },
+  { x: 65, y: 80, label: 'AU-NODE-03', risk: 'MEDIUM' }
+];
 
-  useEffect(() => {
-    const worldNodes = [
-      { x: 25, y: 35, label: 'NA-NODE-01', risk: 'LOW' },
-      { x: 45, y: 40, label: 'EU-NODE-04', risk: 'HIGH' },
-      { x: 75, y: 55, label: 'AS-NODE-09', risk: 'MEDIUM' },
-      { x: 35, y: 75, label: 'SA-NODE-02', risk: 'LOW' },
-      { x: 65, y: 80, label: 'AU-NODE-03', risk: 'MEDIUM' }
-    ];
-    setNodes(worldNodes);
-  }, []);
+export default function ForensicMap() {
+  const [nodes] = useState(WORLD_NODES);
 
   return (
     <div className="w-full h-full relative bg-surface-container-lowest/50 rounded-xl overflow-hidden border border-white/5 neural-bg">

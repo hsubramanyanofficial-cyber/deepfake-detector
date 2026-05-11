@@ -8,7 +8,8 @@ export default function BiometricHUD() {
     const points = Array.from({ length: 12 }).map(() => ({
       x: 20 + Math.random() * 60,
       y: 20 + Math.random() * 60,
-      id: Math.random().toString(36).substring(7)
+      id: Math.random().toString(36).substring(7),
+      rotation: Math.random() * 360
     }));
     setLandmarks(points);
   }, []);
@@ -35,7 +36,7 @@ export default function BiometricHUD() {
           {/* Tracking Lines connecting to center */}
           <div className="absolute h-[1px] bg-primary/20 origin-left" style={{ 
             width: '20px', 
-            transform: `rotate(${Math.random() * 360}deg)` 
+            transform: `rotate(${point.rotation}deg)` 
           }}></div>
         </div>
       ))}

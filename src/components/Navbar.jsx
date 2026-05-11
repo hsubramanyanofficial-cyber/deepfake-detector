@@ -30,14 +30,6 @@ export default function Navbar() {
           >
             Detect
           </NavLink>
-          <NavLink 
-            to="/pricing" 
-            className={({ isActive }) => 
-              `transition-colors hover:text-on-surface ${isActive ? 'text-primary font-bold border-b-2 border-primary-container pb-1' : 'text-on-surface-variant'}`
-            }
-          >
-            Subscriptions
-          </NavLink>
           {isAuthenticated && (
             <NavLink 
               to="/dashboard" 

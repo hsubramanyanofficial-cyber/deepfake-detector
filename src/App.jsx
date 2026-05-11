@@ -11,7 +11,6 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Results = lazy(() => import('./pages/Results'));
 const Auth = lazy(() => import('./pages/Auth'));
 const ApiDocs = lazy(() => import('./pages/ApiDocs'));
-const Pricing = lazy(() => import('./pages/Pricing'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Contact = lazy(() => import('./pages/Contact'));
@@ -47,7 +46,6 @@ function App() {
               } />
               <Route path="auth" element={<Auth />} />
               <Route path="docs" element={<ApiDocs />} />
-              <Route path="pricing" element={<Pricing />} />
               <Route path="terms" element={<Terms />} />
               <Route path="privacy" element={<Privacy />} />
               <Route path="contact" element={<Contact />} />

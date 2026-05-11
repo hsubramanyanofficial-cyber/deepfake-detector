@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 export default function ForensicTopology({ isFake, type }) {
   const [activeMarkers, setActiveMarkers] = useState([]);
+  const [dataStreams, setDataStreams] = useState({ hex: [], binary: [] });
   
   // Generate random markers for synthetic results to simulate "detection nodes"
   useEffect(() => {
@@ -13,6 +14,12 @@ export default function ForensicTopology({ isFake, type }) {
       ];
       setActiveMarkers(markers);
     }
+
+    // Initialize static data streams
+    setDataStreams({
+      hex: Array.from({ length: 20 }).map(() => Math.random().toString(16).substring(2, 6)),
+      binary: Array.from({ length: 15 }).map(() => Math.random().toString(2).substring(2, 6))
+    });
   }, [isFake]);
 
   return (
@@ -28,13 +35,13 @@ export default function ForensicTopology({ isFake, type }) {
       
       {/* Data Streams (Simulated binary/hex data) */}
       <div className="absolute left-4 top-1/4 h-1/2 w-8 data-stream hidden md:block opacity-30 select-none">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div key={i} className="mb-1">{Math.random().toString(16).substring(2, 6)}</div>
+        {dataStreams.hex.map((val, i) => (
+          <div key={i} className="mb-1">{val}</div>
         ))}
       </div>
       <div className="absolute right-4 top-1/3 h-1/3 w-8 data-stream hidden md:block opacity-30 text-right select-none">
-        {Array.from({ length: 15 }).map((_, i) => (
-          <div key={i} className="mb-1">{Math.random().toString(2).substring(2, 6)}</div>
+        {dataStreams.binary.map((val, i) => (
+          <div key={i} className="mb-1">{val}</div>
         ))}
       </div>
 

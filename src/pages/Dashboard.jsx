@@ -1,36 +1,16 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import ForensicMap from '../components/ForensicMap';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { recentScans, isLoading, subscriptionPlan, scanCredits, maxCredits } = useAuth();
+  const { recentScans, isLoading } = useAuth();
   
   const fakesCount = recentScans.filter(s => s.status === 'Synthetic').length;
-  const showPaymentSuccess = new URLSearchParams(location.search).get('payment_success') === 'true';
 
   return (
     <main className="flex-grow max-w-7xl w-full mx-auto px-8 py-12 flex flex-col gap-10">
-      {showPaymentSuccess && (
-        <div className="bg-[#4ADE80]/10 border border-[#4ADE80]/30 rounded-2xl p-6 flex items-center justify-between animate-enter-3d shadow-lg shadow-[#4ADE80]/5">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-[#4ADE80]/20 flex items-center justify-center text-[#4ADE80]">
-              <span className="material-symbols-outlined text-2xl">verified</span>
-            </div>
-            <div>
-              <h3 className="font-headline font-bold text-lg text-on-surface">Subscription Activated</h3>
-              <p className="text-on-surface-variant text-sm">Your pro-tier forensic tools are now fully unlocked. Welcome to Sentinel.</p>
-            </div>
-          </div>
-          <button 
-            onClick={() => navigate('/detect')}
-            className="px-6 py-2 bg-[#4ADE80] text-black font-bold rounded-xl hover:brightness-110 transition-all text-sm"
-          >
-            Start Analyzing
-          </button>
-        </div>
-      )}
+
       <div className="flex justify-between items-end">
         <div>
           <h1 className="text-4xl font-headline font-bold text-on-surface">Dashboard</h1>
@@ -63,25 +43,7 @@ export default function Dashboard() {
           <div className="text-4xl font-headline font-bold text-error">{fakesCount}</div>
         </div>
 
-        <div className="glass-card rounded-2xl p-6 flex flex-col gap-4 rotate-3d active-3d hover:glow-primary transition-all animate-enter-3d-more-delayed bg-primary/5 border-primary/20">
-          <div className="flex justify-between">
-            <div className="flex flex-col">
-              <span className="text-primary font-bold text-[10px] tracking-[0.2em] uppercase">{subscriptionPlan} Plan</span>
-              <span className="text-outline-variant font-bold text-[8px] uppercase">Credits Remaining</span>
-            </div>
-            <span className="material-symbols-outlined text-primary">token</span>
-          </div>
-          <div className="flex items-end gap-2">
-            <div className="text-4xl font-headline font-bold text-on-surface">{scanCredits}</div>
-            <div className="text-on-surface-variant text-sm mb-1">/ {maxCredits}</div>
-          </div>
-          <div className="w-full h-1 bg-surface-container rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-primary transition-all duration-1000" 
-              style={{ width: `${(scanCredits / maxCredits) * 100}%` }}
-            ></div>
-          </div>
-        </div>
+
 
         <div className="glass-card rounded-2xl p-6 flex flex-col gap-4 rotate-3d active-3d hover:glow-primary transition-all animate-enter-3d-more-delayed">
           <div className="flex justify-between">
@@ -150,7 +112,6 @@ export default function Dashboard() {
               <span className="material-symbols-outlined text-primary">key</span>
               API Management
             </h3>
-            <span className="px-2 py-1 bg-primary/10 text-primary text-[10px] font-black rounded uppercase tracking-tighter">Pro Feature</span>
           </div>
           <p className="text-on-surface-variant text-sm font-light">
             Integrate Sentinel's forensic engine into your own infrastructure via our REST API.
@@ -200,8 +161,8 @@ export default function Dashboard() {
               <div className="h-full bg-primary w-[98.4%]"></div>
             </div>
           </div>
-          <button className="w-full py-3 bg-surface-container-highest text-on-surface rounded-xl text-sm font-bold hover:bg-outline-variant/20 transition-colors opacity-50 cursor-not-allowed">
-            Training (Enterprise)
+          <button className="w-full py-3 bg-surface-container-highest text-on-surface rounded-xl text-sm font-bold hover:bg-outline-variant/20 transition-colors">
+            Configure Training
           </button>
         </div>
       </div>

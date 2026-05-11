@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useMemo } from 'react';
 import ResultCard from '../components/ResultCard';
 import ForensicTopology from '../components/ForensicTopology';
 
@@ -7,6 +8,9 @@ export default function Results() {
   const location = useLocation();
   
   const fileData = location.state?.fileData || { name: 'sample_video.mp4', isFake: true, score: 98.4, type: 'Video', anomalies: [{ location: '00:14 - 00:18', description: 'Lip sync desynchronization detected' }] };
+
+  const reportId = useMemo(() => Math.floor(10000 + Math.random() * 90000), []);
+  const certId = useMemo(() => Math.random().toString(36).substring(7).toUpperCase(), []);
 
   const getForensicDetails = (type, isFake) => {
     switch (type) {
@@ -68,7 +72,7 @@ export default function Results() {
             <div className="text-right">
               <h2 className="text-2xl font-bold text-gray-800 tracking-tight">Forensic Analysis Report</h2>
               <div className="text-[10px] text-gray-400 font-mono mt-1 space-y-0.5">
-                <p>GEN_ID: {Math.floor(10000 + Math.random() * 90000)}</p>
+                <p>GEN_ID: {reportId}</p>
                 <p>TS_STAMP: {new Date().toLocaleString()}</p>
               </div>
             </div>
@@ -168,7 +172,7 @@ export default function Results() {
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-indigo-900/60 uppercase">Sentinel Security Protocol</p>
-                  <p className="text-xs font-mono text-gray-400">CERT: {Math.random().toString(36).substring(7).toUpperCase()}-DFX</p>
+                  <p className="text-xs font-mono text-gray-400">CERT: {certId}-DFX</p>
                 </div>
               </div>
             </div>

@@ -25,11 +25,11 @@ export default function ForensicConsole() {
   useEffect(() => {
     let current = 0;
     const interval = setInterval(() => {
-      setLogs(prev => [...prev, LOG_LINES[current % LOG_LINES.length]]);
+      setLogs(prev => {
+        const updated = [...prev, LOG_LINES[current % LOG_LINES.length]];
+        return updated.length > 10 ? updated.slice(1) : updated;
+      });
       current++;
-      if (prev => prev.length > 50) {
-          setLogs(prev => prev.slice(1));
-      }
     }, 1500);
     return () => clearInterval(interval);
   }, []);

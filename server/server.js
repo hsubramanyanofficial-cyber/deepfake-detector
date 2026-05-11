@@ -2,7 +2,6 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
-import Stripe from 'stripe';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -11,16 +10,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const scansFilePath = path.join(__dirname, 'scans.json');
 
-// Use the environment variable for the key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2023-10-16',
-});
 const app = express();
 const port = process.env.PORT || 5000;
 
 console.log('--- SENTINEL BACKEND INITIALIZING ---');
 console.log('Database Path:', scansFilePath);
-console.log('Stripe Key Loaded:', !!process.env.STRIPE_SECRET_KEY);
 
 app.use(cors());
 app.use(express.json());
@@ -96,47 +90,10 @@ app.post('/api/analyze/url', (req, res) => {
 
 // --- Static File Serving (Production) ---
 const distPath = path.join(__dirname, '../dist');
-const CLIENT_URL = process.env.CLIENT_URL || 'https://deep-detect.netlify.app/';
 
 app.use(express.static(distPath));
 
-app.post('/api/create-checkout-session', async (req, res) => {
-  const { planName, price, interval, currency = 'usd' } = req.body;
-  try {
-    const lowerCurrency = currency.toLowerCase();
-    const paymentMethods = ['card', 'paypal', 'link'];
 
-    if (lowerCurrency === 'inr') {
-      paymentMethods.push('upi');
-    } else if (lowerCurrency === 'eur') {
-      paymentMethods.push('ideal', 'sepa_debit', 'bancontact');
-    } else {
-      paymentMethods.push('alipay');
-    }
-
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: paymentMethods,
-      line_items: [{
-        price_data: {
-          currency: lowerCurrency,
-          product_data: {
-            name: `Sentinel AI - ${planName} Plan`,
-            description: `Deepfake Detector Subscription (${interval})`,
-          },
-          unit_amount: Math.round(price * 100),
-        },
-        quantity: 1,
-      }],
-      mode: 'payment',
-      success_url: `${CLIENT_URL}/dashboard?payment_success=true`,
-      cancel_url: `${CLIENT_URL}/pricing?payment_cancelled=true`,
-    });
-    res.json({ url: session.url });
-  } catch (error) {
-    console.error('Stripe API Error:', error.message);
-    res.status(500).json({ error: 'Stripe API Error: ' + error.message });
-  }
-});
 
 // ... (other API endpoints unchanged)
 

@@ -13,15 +13,10 @@ export default function Detection() {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isXrayEnabled, setIsXrayEnabled] = useState(false);
-  const { addScan, scanCredits, subscriptionPlan } = useAuth();
+  const { addScan } = useAuth();
   const analysisResultRef = useRef(null);
 
-  useEffect(() => {
-    // Check if we have credits on load
-    if (scanCredits <= 0 && subscriptionPlan !== 'Enterprise') {
-      // Optional: show a toast or message
-    }
-  }, [scanCredits, subscriptionPlan]);
+
 
   useEffect(() => {
     if (!selectedFile) {
@@ -50,11 +45,7 @@ export default function Detection() {
   const startAnalysis = async () => {
     if (!selectedFile) return;
 
-    if (scanCredits <= 0 && subscriptionPlan !== 'Enterprise') {
-      alert(`Scan limit reached for your ${subscriptionPlan} plan. Please upgrade to continue forensic analysis.`);
-      navigate('/pricing');
-      return;
-    }
+
 
     setIsAnalyzing(true);
 
@@ -110,7 +101,6 @@ export default function Detection() {
       });
     } catch (err) {
       alert(err.message);
-      navigate('/pricing');
     }
   };
 
@@ -123,7 +113,7 @@ export default function Detection() {
         <div className="flex items-center gap-3">
           <span className="text-primary font-headline tracking-[0.2em] text-xs uppercase font-bold">New Forensic Analysis</span>
           <span className="h-1 w-1 rounded-full bg-outline-variant/30"></span>
-          <span className="text-outline-variant font-headline tracking-[0.1em] text-[10px] uppercase font-bold">Credits: {scanCredits} / {subscriptionPlan}</span>
+          <span className="text-outline-variant font-headline tracking-[0.1em] text-[10px] uppercase font-bold">Unlimited Forensic Access</span>
         </div>
         <h1 className="text-5xl font-headline font-bold tracking-tighter text-on-surface">Detection Setup</h1>
         <p className="text-on-surface-variant max-w-2xl font-light">
